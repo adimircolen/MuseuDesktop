@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/TPII.iml" filepath="$PROJECT_DIR$/TPII.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MuseuDesktop.iml" filepath="$PROJECT_DIR$/MuseuDesktop.iml" />
     </modules>
   </component>
 </project>

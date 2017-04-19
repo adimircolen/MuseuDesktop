@@ -7,92 +7,39 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class MuseuPanel extends JFrame {
-    JList galleryJList;
-    JButton addWorkArt;
-    JButton removeWorkArt;
-    JLabel searchLabel;
-    JTextField searchField;
-    JButton btnByNumber;
-    JButton btnByName;
-    JButton btnByAutor;
-    JButton btnFilterSculpture;
-    JButton btnFilterPainting;
-    JButton btnFilterMusic;
-    JDialog waFrame;
+    private JList galleryJList;
+    private JButton addWorkArt; private JButton removeWorkArt;
+    private JLabel searchLabel; private JTextField searchField;
+    private JButton btnByNumber; private JButton btnByName;
+    private JButton btnByAutor; private JButton btnFilterSculpture;
+    private JButton btnFilterPainting; private JButton btnFilterMusic;
+    private JFrame mainFrame; private JFrame frame;
+    private WorkArt workArt;
 
     Gallery gallery = new Gallery();
 
     public MuseuPanel() {
-        super( "Sistema de Gerenciamento de Arte" );
-        Container c = getContentPane();
-        c.setLayout( new FlowLayout());
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        prepareGUI();
+//        addWorkArt.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                SimpleFrame sFrame = new SimpleFrame(waFrame);
+//            }
+//        });
 
-        waFrame = new JDialog(this, "Criar Obra de Arte", true);
-
-        galleryJList = new JList();
-        galleryJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-        addWorkArt = new JButton( "Adicionar Obra" );
-        removeWorkArt = new JButton( "Remover Obra" );
-
-        searchLabel = new JLabel("Procurar obra");
-        searchField = new JTextField(15);
-        btnByNumber = new JButton("por número");
-        btnByName = new JButton("por nome");
-        btnByAutor = new JButton("por autor");
-
-        btnFilterMusic = new JButton("Músicas");
-        btnFilterPainting = new JButton("Pinturas");
-        btnFilterSculpture = new JButton("Esculturas");
-
-        this.setName("001");
-
-        c.add(searchLabel);
-        c.add(searchField);
-        c.add(btnByNumber);
-        c.add(btnByName);
-        c.add(btnByAutor);
-
-        c.add(btnFilterMusic);
-        c.add(btnFilterPainting);
-        c.add(btnFilterSculpture);
-
-
-        c.add( new JScrollPane( galleryJList ) );
-        c.add(addWorkArt);
-        c.add(removeWorkArt);
-
-        this.setSize( 600, 300 );
-        this.setVisible(true);
-
-        addWorkArt.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                SimpleFrame sFrame = new SimpleFrame(waFrame);
-            }
-        });
-
-        removeWorkArt.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int index = galleryJList.getSelectedIndex();
-                WorkArt wa = gallery.elementAt(index);
-                if (wa != null) gallery.remove(wa.getNumOfArtWork());
-                galleryJList.setListData(gallery.toListModel());
-            }
-        });
+//        removeWorkArt.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                int index = galleryJList.getSelectedIndex();
+//                WorkArt wa = gallery.elementAt(index);
+//                if (wa != null) gallery.remove(wa.getNumOfArtWork());
+//                galleryJList.setListData(gallery.toListModel());
+//            }
+//        });
     }
 
-//    public void repaint() {
-//        super.repaint();
-//        System.out.println("Gallery On Main: "+ gallery);
-//        galleryJList.setListData(gallery.toListModel());
-//    }
-
-    class SimpleFrame {
-        WorkArt wa;
-        JDialog frame;
+    private void showJFrameDemo(){
+        final WorkArt[] wa = new WorkArt[1];
         JLabel number;
         JTextField textNumber;
         JLabel name;
@@ -103,63 +50,114 @@ public class MuseuPanel extends JFrame {
         JTextField textDesc;
         JLabel typeOfWorkArt;
         JComboBox comboType;
-
         JButton btnSave;
 
-        public SimpleFrame(JDialog f) {
-            frame = f;
-            frame.setLayout( new FlowLayout());
-            frame.setTitle("Criar Obra de Arte");
-            frame.setSize(300, 300);
-            String names[] = {"Pintura", "Escultura", "Musica"};
+        frame = new JFrame();
 
-            number = new JLabel("Número da Obra:");
-            textNumber = new JTextField(15);
-            name = new JLabel("Nome da Obra:");
-            textName = new JTextField(15);
-            author = new JLabel("Autor:");
-            textAuthor = new JTextField(15);
-            desc = new JLabel("Descrição:");
-            textDesc = new JTextField(15);
-            typeOfWorkArt = new JLabel("Tipo de Obra");
-            comboType = new JComboBox(names);
+        frame.setLayout( new FlowLayout());
+        frame.setTitle("Criar Obra de Arte");
+        frame.setSize(300, 300);
+        String names[] = {"Pintura", "Escultura", "Musica"};
 
-            frame.setName("002");
+        number = new JLabel("Número da Obra:");
+        textNumber = new JTextField(15);
+        name = new JLabel("Nome da Obra:");
+        textName = new JTextField(15);
+        author = new JLabel("Autor:");
+        textAuthor = new JTextField(15);
+        desc = new JLabel("Descrição:");
+        textDesc = new JTextField(15);
+        typeOfWorkArt = new JLabel("Tipo de Obra");
+        comboType = new JComboBox(names);
 
-            frame.add(typeOfWorkArt);
-            frame.add(comboType);
-            frame.add(number);
-            frame.add(textNumber);
-            frame.add(name);
-            frame.add(textName);
-            frame.add(author);
-            frame.add(textAuthor);
-            frame.add(desc);
-            frame.add(textDesc);
+        frame.add(typeOfWorkArt);
+        frame.add(comboType);
+        frame.add(number);
+        frame.add(textNumber);
+        frame.add(name);
+        frame.add(textName);
+        frame.add(author);
+        frame.add(textAuthor);
+        frame.add(desc);
+        frame.add(textDesc);
 
-            btnSave = new JButton("Adicionar Obra");
+        btnSave = new JButton("Adicionar Obra");
 
-            frame.add(btnSave);
-            btnSave.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    System.out.println("Formulario: "+textNumber.getText() + " name: " + textName.getText() + " autor: " + textAuthor.getText());
-                    int number = Integer.parseInt(textNumber.getText());
-                    wa = new Sculpture(number, textAuthor.getText(), textName.getText(), textDesc.getText(), new Dimension(1f,2f));
-                    System.out.println(wa);
-                    System.out.println(frame.getRootPane().getName());
-
-//                    dispose();
+        frame.add(btnSave);
+        btnSave.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Selecionado: " + comboType.getSelectedItem());
+                int number = Integer.parseInt(textNumber.getText());
+                switch (comboType.getSelectedItem().toString()){
+                    case "Escultura":
+                        workArt = new Sculpture(number, textAuthor.getText(), textName.getText(), textDesc.getText(), new Dimension(1f,2f), "material");
+                        break;
+                    case "Pintura":
+                        workArt = new Painting(number, textName.getText(), textAuthor.getText(), textDesc.getText(), new Dimension(1f,2f));
+                        break;
+                    case "Musica":
+                        workArt = new Music(number, textName.getText(), textAuthor.getText(), textDesc.getText(), "00:00", "Fita", Integer.parseInt("1"));
+                        break;
                 }
-            });
-            frame.setVisible(true);
-        }
-        public WorkArt getWorkArt() {
-            return wa;
-        }
+                System.out.println("Formulario: "+textNumber.getText() + " name: " + textName.getText() + " autor: " + textAuthor.getText());
+                System.out.println(workArt);
+                gallery.add(workArt);
+                galleryJList.setListData(gallery.toListModel());
+                frame.dispose();
+            }
+        });
+
+        mainFrame.setVisible(true);
     }
 
+    private void prepareGUI(){
+        mainFrame = new JFrame("Museu Adimir Colen");
+        mainFrame.setLayout( new FlowLayout());
+        mainFrame.setSize( 600, 300 );
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        galleryJList = new JList();
+        galleryJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        addWorkArt = new JButton( "Adicionar Obra" );
+        removeWorkArt = new JButton( "Remover Obra" );
+        searchLabel = new JLabel("Procurar obra");
+        searchField = new JTextField(15);
+        btnByNumber = new JButton("por número");
+        btnByName = new JButton("por nome");
+        btnByAutor = new JButton("por autor");
+        btnFilterMusic = new JButton("Músicas");
+        btnFilterPainting = new JButton("Pinturas");
+        btnFilterSculpture = new JButton("Esculturas");
+
+        mainFrame.add(searchLabel);
+        mainFrame.add(searchField);
+        mainFrame.add(btnByNumber);
+        mainFrame.add(btnByName);
+        mainFrame.add(btnByAutor);
+        mainFrame.add(btnFilterMusic);
+        mainFrame.add(btnFilterPainting);
+        mainFrame.add(btnFilterSculpture);
+        mainFrame.add( new JScrollPane( galleryJList ) );
+        mainFrame.add(addWorkArt);
+        mainFrame.add(removeWorkArt);
+
+        addWorkArt.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.setVisible(true);
+            }
+        });
+    }
+
+//    public void repaint() {
+//        super.repaint();
+//        System.out.println("Gallery On Main: "+ gallery);
+//        galleryJList.setListData(gallery.toListModel());
+//    }
+
     public static void main( String args[] ) {
-        new MuseuPanel();
+        MuseuPanel  museuPanel = new MuseuPanel();
+        museuPanel.showJFrameDemo();
     }
 }

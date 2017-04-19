@@ -5,10 +5,6 @@ public class Sculpture extends WorkArt {
     String material;
 
     public Sculpture () {}
-    public Sculpture (Integer num, String authour, String name, String description, Dimension dimension) {
-        super(num, authour, name, description);
-        this.dimension = dimension;
-    }
     public Sculpture (Integer num, String name, String authour, String description, Dimension dimension, String material) {
         super(num, name, authour, description);
         this.dimension = dimension;
